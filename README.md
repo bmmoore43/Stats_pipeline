@@ -11,12 +11,15 @@
     
     For binary matrices:
     
-    1. Get feature percents and logratios: #note if the other class has 0 genes, will use 0.000001 
+    1. Get feature percents and logratios: 
+    
+    #note if the other class has 0 genes, will use 0.000001 
     as an approximation to calculate the logratio
       
             python parse_binary_get_feature_percent_logratio.py <binary matrix file> <gene type of negative class>
          
     2. Get statistical significance, using fishers exact test. 
+    
     First get enrichment table:
       
             python parse_binary_get_enrich_table.py <binary matrix file>
@@ -30,6 +33,16 @@
      3. Make barplot
      
      Of pvalues: need significant ones
+     
+     #gets significant features and converts qvalue to the -log(qvalue)
+     
+         python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
+         
+         output= .sig_score file
+         
+     barplot:
+     
+         
      
           
          
