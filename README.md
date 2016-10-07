@@ -5,7 +5,7 @@
    
    Run:
          
-         python script_combine_exression_matrix.py <classes file> <matrix file>
+            python script_combine_exression_matrix.py <classes file> <matrix file>
 
 3. Select matrix type
     
@@ -28,7 +28,7 @@
          
     Then do fishers exact test:
     
-          python Test_Fisher.py <enrichment table file> 1 # 1 = with q-value, 2 = without
+            python Test_Fisher.py <enrichment table file> 1 # 1 = with q-value, 2 = without
         
      3. Make barplot
      
@@ -36,9 +36,9 @@
      
      gets significant features and converts qvalue to the -log(qvalue)
      
-         python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
+            python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
          
-         output= .sig_score file
+            output= .sig_score file
          
      barplot:
      
@@ -55,5 +55,29 @@
      2. make boxplots for each continuous feature
      
             R --vanilla --slave --args <dir with continuous matrix file> <continous matrix file> < /mnt/home/john3784/Github/R_scripts/boxplot_features_s.R
+            
+     For categorical data:
+     
+     1. These are gene clusters. We want to know if there are significant clusters for each gene type. 
+     If you want to know what gene is in what cluster, and how many genes are in a cluster, run this script on the directory with cluster gene files (file with gene, cluster.number):
+     
+            python parse_categ_get_genenum.py <dir with directories of gene_list files> <file with all genes> <output name>
+            
+            python parse_categ_get_genenum.py /mnt/home/john3784/2-specialized_metab_project/clustering/ AT_all-genes.txt cluster_gene_num_
+            
+     2. To get the significant ones, create a table of enrichment for each cluster:
+     
+            python parse_categ_get_enrichment.py <dir with directories of gene_list files> <classes_file>
+            
+            python /mnt/home/john3784/Github/parse_scripts/parse_categ_get_enrichment.py /mnt/home/john3784/2-specialized_metab_project/clustering/ SMvsPM_classes-enz_2.0-kinases.excluded.txt
+     
+     3. Use the fishers exact test on these enrichment tables:
+     
+            python Test_Fisher.py <enrichment table> <0 or 1, 1 for qvalue>
+            python /mnt/home/john3784/Github/parse_scripts/Test_Fisher.py akk1000.stressfc.run5.enrichment_table.txt 1
+              
+     use a unix loop:
+     
+            
           
          
