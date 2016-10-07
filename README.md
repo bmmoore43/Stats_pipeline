@@ -76,8 +76,26 @@
             python Test_Fisher.py <enrichment table> <0 or 1, 1 for qvalue>
             python /mnt/home/john3784/Github/parse_scripts/Test_Fisher.py akk1000.stressfc.run5.enrichment_table.txt 1
               
-     use a unix loop:
+     use a unix loop for multiple tables:
      
-            
+           for i in *.enrichment_table.txt; do echo $i; python /mnt/home/john3784/Github/parse_scripts/Test_Fisher.py $i 1; done
+     
+     
+     4. parse enrichment table to get significant clusters and convert qvalue to the -log(qvalue)
+     
+            python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
+         
+            output= .sig_score file
+         
+    unix loop:
+    
+            for i in *.fisher.pqvalue; do echo $i; python /mnt/home/john3784/Github/parse_scripts/parse_enrichment_get_sig.py $i; done
+   
+   concatenate:
+   
+            cat *.sig_score > akk_all_sig_score.txt
+   barplot:
+     
+            R --vanilla --slave --args <dir with .sig_score file> <.sig_score file> < /mnt/home/john3784/Github/R_scripts/barplot_features_s.R
           
          
