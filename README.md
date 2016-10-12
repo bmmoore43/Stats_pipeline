@@ -58,20 +58,33 @@
             
      For categorical data:
      
-     1. These are gene clusters. We want to know if there are significant clusters for each gene type. 
+     1. These are gene clusters. We want to know if there is a difference between SM and PM in terms of clustering. First we look at cluster size:  
      If you want to know what gene is in what cluster, and how many genes are in a cluster, run this script on the directory with cluster gene files (file with gene, cluster.number):
      
             python parse_categ_get_genenum.py <dir with directories of gene_list files> <file with all genes> <output name>
             
             python parse_categ_get_genenum.py /mnt/home/john3784/2-specialized_metab_project/clustering/ AT_all-genes.txt cluster_gene_num_
             
-     2. To get the significant ones, create a table of enrichment for each cluster:
+      2. Then combine with classes file:
      
-            python parse_categ_get_enrichment.py <dir with directories of gene_list files> <classes_file>
+             for i in cluster_gene_num*; do echo $i; python /mnt/home/john3784/Github/parse_scripts/script_combine_exression_matrix.py /mnt/home/john3784/2-specialized_metab_project/machine-learn_matrices/SMvsPM_classes-enz_2.0-kinases.excluded.txt $i; done
             
-            python /mnt/home/john3784/Github/parse_scripts/parse_categ_get_enrichment.py /mnt/home/john3784/2-specialized_metab_project/clustering/ SMvsPM_classes-enz_2.0-kinases.excluded.txt
+     3. Next do wilcox test on file to see if there is significant difference between cluster size
      
-     3. Use the fishers exact test on these enrichment tables:
+            R --vanilla --slave --args <dir with files> <cluster gene number file with class> < /mnt/home/john3784/Github/R_scripts/wilcox_test2.R
+            
+            for i in SMvsPM_classes-enz_2.0-kinases.excluded.txt-cluster_gene_num_*; do echo $i; R --vanilla --slave --args /mnt/home/john3784/2-specialized_metab_project/clustering/approx_k_kmeans/ $i < /mnt/home/john3784/Github/R_scripts/wilcox_test2.R; done       
+      4. Concatenate files:
+     
+               cat *.wilcoxtest.txt > akk_all_wilcoxtest.txt
+     
+      5. If you want to know what are the significant clusters for each gene type, first create a table of enrichment for each cluster:
+     
+               python parse_categ_get_enrichment.py <dir with directories of gene_list files> <classes_file>
+            
+             python /mnt/home/john3784/Github/parse_scripts/parse_categ_get_enrichment.py /mnt/home/john3784/2-specialized_metab_project/clustering/ SMvsPM_classes-enz_2.0-kinases.excluded.txt
+     
+     6. Use the fishers exact test on these enrichment tables:
      
             python Test_Fisher.py <enrichment table> <0 or 1, 1 for qvalue>
             python /mnt/home/john3784/Github/parse_scripts/Test_Fisher.py akk1000.stressfc.run5.enrichment_table.txt 1
@@ -81,7 +94,7 @@
            for i in *.enrichment_table.txt; do echo $i; python /mnt/home/john3784/Github/parse_scripts/Test_Fisher.py $i 1; done
      
      
-     4. parse enrichment table to get significant clusters and convert qvalue to the -log(qvalue)
+     7. parse enrichment table to get significant clusters and convert qvalue to the -log(qvalue)
      
             python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
          
