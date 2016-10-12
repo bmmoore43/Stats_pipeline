@@ -7,9 +7,9 @@
          
             python script_combine_exression_matrix.py <classes file> <matrix file>
 
-3. Select matrix type
+3. Select matrix type:
     
-    For binary matrices:
+    A. For binary matrices:
     
     1. Get feature percents and logratios: 
     
@@ -17,6 +17,8 @@
     as an approximation to calculate the logratio
       
             python parse_binary_get_feature_percent_logratio.py <binary matrix file> <gene type of negative class>
+            
+            python parse_binary_get_feature_percent_logratio.py SMvsPM_classes-enz_2.0-kinases.excluded.txt-binary_matrix_2.0_mod.txt PM
          
     2. Get statistical significance, using fishers exact test. 
     
@@ -26,13 +28,11 @@
          
             output= binary_matrix_file_enrichment_table.txt
          
-    Then do fishers exact test:
+    3. Then do fishers exact test:
     
             python Test_Fisher.py <enrichment table file> 1 # 1 = with q-value, 2 = without
         
-     3. Make barplot
-     
-     Of pvalues: need significant ones
+    4. Make barplot of pvalues: need significant ones
      
      gets significant features and converts qvalue to the -log(qvalue)
      
@@ -46,6 +46,16 @@
          
             R --vanilla --slave --args /mnt/home/john3784/2-specialized_metab_project/machine-learn_matrices/ SMvsPMclasses_file.2.0.txt-    enzymatic_genes2.0.txt-binary_matrix_2.0_mod.txt_enrichment_table.txt.fisher.pqvalue.sig_score < /mnt/home/john3784/Github/R_scripts/barplot_features_s.R
          
+     5. get the logratios for significant features and make barplot:
+     
+     first combine sig_score file with logratio file:
+     
+            python script_combine_exression_matrix.py <logratio file> <sig score file>
+            
+     make barplot of significant logratio:
+     
+            R --vanilla --slave --args <dir with logratio-sig_score file> <logratio-sig_score file> < /mnt/home/john3784/Github/R_scripts/barplot_logratio_only.R
+     
      For continuous matrix:
      
      1. get statisitical significance of each continous feature between two classes using the wilcox test (mann whitney u)
