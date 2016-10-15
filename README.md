@@ -60,11 +60,11 @@
      
      1. get statisitical significance of each continous feature between two classes using the wilcox test (mann whitney u)
      
-            R --vanilla --slave --args <dir with continuous matrix file> <continous matrix file> < /mnt/home/john3784/Github/R_scripts/wilcox_test.R
+             R --vanilla --slave --args <dir with continuous matrix file> <continous matrix file> < /mnt/home/john3784/Github/R_scripts/wilcox_test.R
             
      2. make boxplots for each continuous feature
      
-            R --vanilla --slave --args <dir with continuous matrix file> <continous matrix file> < /mnt/home/john3784/Github/R_scripts/boxplot_features_s.R
+              R --vanilla --slave --args <dir with continuous matrix file> <continous matrix file> < /mnt/home/john3784/Github/R_scripts/boxplot_features_s.R
             
      For categorical data:
      
