@@ -18,19 +18,25 @@
       
             python parse_binary_get_feature_percent_logratio.py <binary matrix file> <gene type of negative class>
             
-            python parse_binary_get_feature_percent_logratio.py SMvsPM_classes-enz_2.0-kinases.excluded.txt-binary_matrix_2.0_mod.txt PM
+            python ~john3784/Github/parse_scripts/parse_binary_get_feature_percent_logratio.py SMvsPM_enz_2.0-kinases.excluded-aracyc.txt-binary_matrix_2.0_mod.txt PM
          
     2. Get statistical significance, using fishers exact test. 
     
     First get enrichment table:
       
             python parse_binary_get_enrich_table.py <binary matrix file>
+            
+            python ~john3784/Github/parse_scripts/parse_binary_get_enrich_table.py SMvsPM_enz_2.0-kinases.excluded-aracyc.txt-binary_matrix_2.0_mod.txt
          
             output= binary_matrix_file_enrichment_table.txt
          
     3. Then do fishers exact test:
     
-            python Test_Fisher.py <enrichment table file> 1 # 1 = with q-value, 2 = without
+            python Test_Fisher.py <enrichment table file> 1 # 1 = with q-value, 0 = without
+            
+            #if you can't run Test_Fisher.py, try running from Alex's script ~seddonal/scripts/6_motif_mapping/Test_Fisher.py
+            
+            python ~seddonal/scripts/6_motif_mapping/Test_Fisher.py SMvsPM_enz_2.0-kinases.excluded-aracyc.txt-binary_matrix_2.0_mod.txt_enrichment_table.txt 1
         
     4. Make barplot of pvalues: need significant ones
      
@@ -38,6 +44,8 @@
      
             python parse_enrichment_get_sig.py <.pqvalue file from fisher's exact>
          
+            python ~john3784/Github/parse_scripts/parse_enrichment_get_sig.py SMvsPM_enz_2.0-kinases.excluded-aracyc.txt-binary_matrix_2.0_mod.txt_enrichment_table.txt.fisher.pqvalue
+            
             output= .sig_score file
          
      barplot:
