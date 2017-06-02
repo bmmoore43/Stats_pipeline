@@ -68,9 +68,9 @@
      
      1. get cluster enrichment
      
-            python cluster_enrichment_final.py <file with gene: cluster> <file with either Go term:gene or gene:pathway/class>
+            python cluster_enrichment_final.py <file with gene: cluster> <file with either Go term:gene or gene:pathway/class> 
             
-        returns tableOfEnrichment_file
+        returns tableOfEnrichment_file, ** note, you may need to add header to cluster files, use add_header.py or replace_header.py
         
      2. use tableOfEnrichment_file to do fisher exact test
      
@@ -85,6 +85,12 @@
             python get_matrix_sigSM-PMclusters.py <.fisher.pqvalue file> <gene:cluster file>
             
             python ~john3784/Github/GO_enrichment/get_matrix_sigSM-PMclusters.py tableforEnrichment_genelist_h100_dev_average.fisher.pqvalue genelist_h100_dev_average.header.txt
+            
+         for many cluster and fisher files, use this loop:
+         
+            get_matrix_sigSM-PMclusters_loop.py <dir with cluster and fisher files> 
+            
+            python ~john3784/Github/GO_enrichment/get_matrix_sigSM-PMclusters_loop.py /mnt/home/john3784/2-specialized_metab_project/kmeans_clustering/cmeans/
      
      For continuous matrix:
      
