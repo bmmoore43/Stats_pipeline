@@ -68,7 +68,7 @@
      
      1. get cluster enrichment
      
-            python cluster_enrichment_final.py <file with gene: cluster> <file with either Go term:gene or gene:pathway/class> 
+            python ~john3784/Github/GO_enrichment/cluster_enrichment_final.py <file with gene: cluster> <file with either Go term:gene or gene:pathway/class> 
             
         returns tableOfEnrichment_file, ** note, you may need to add header to cluster files, use add_header.py or replace_header.py
         
