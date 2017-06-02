@@ -64,6 +64,28 @@
      
             R --vanilla --slave --args <dir with logratio-sig_score file> <logratio-sig_score file> < /mnt/home/john3784/Github/R_scripts/barplot_logratio_only.R
      
+     For enrichment with clusters (ie. GO enrichment):
+     
+     1. get cluster enrichment
+     
+            python cluster_enrichment_final.py <file with gene: cluster> <file with either Go term:gene or gene:pathway/class>
+            
+        returns tableOfEnrichment_file
+        
+     2. use tableOfEnrichment_file to do fisher exact test
+     
+            python ~john3784/Github/GO_enrichment/Test_Fisher.py <tableforEnrichment> <0 for pval, 1 for pval and qval>
+            
+     3. get significant ones only:
+     
+            python ~john3784/Github/GO_enrichment/parse_significant2.py <.fisher.pqvalue file>
+            
+     4. get a matrix of significant and non-signif SM and PM genes in a cluster where 0= no SM or PM genes in cluster 1= SM genes (signif or not in cluster), 2= PM genes (significant or not in cluster)
+     
+            python get_matrix_sigSM-PMclusters.py <.fisher.pqvalue file> <gene:cluster file>
+            
+            python ~john3784/Github/GO_enrichment/get_matrix_sigSM-PMclusters.py tableforEnrichment_genelist_h100_dev_average.fisher.pqvalue genelist_h100_dev_average.header.txt
+     
      For continuous matrix:
      
      1. get statisitical significance of each continous feature between two classes using the wilcox test (mann whitney u)
